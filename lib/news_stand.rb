@@ -1,5 +1,4 @@
-require "news_stand/version"
-
-module NewsStand
-  # Your code goes here...
-end
+require_relative "news_stand/version"
+require_relative './news_stand/cli'
+require_relative './news_stand/article'
+require_relative './news_stand/category'
