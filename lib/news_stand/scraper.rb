@@ -1,27 +1,38 @@
 class NewsStand::Scraper
 
-  def self.scrape_entertainment_page
-    doc = Nokogiri::HTML(open("http://www.cnn.com/entertainment"))
-    #headlines (iterate w/ each to create numbered list and also assign object titles) = doc.css("h3.cd__headline[data-analytics='Top Stories_list-small-vertical_article_'] a span.cd__headline-text")
+  def self.scrape_crime_justice
+    doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/crime-and-justice"))
+    #title = doc.css("h3.cd__headline[data-analytics='_list-hierarchical-xs_article_'] a span.cd__headline-text").each{|x| puts x.text}
 
-    #url (iterate w/ each)= doc.css("h3.cd__headline[data-analytics='Top Stories_list-small-vertical_article_'] a") **.each do ** block(puts t.attribute("href").value) ****urls that are generated need the http://www.cnn.com prefix. find a way to add
+    #link = doc.css("h3.cd__headline[data-analytics='_list-hierarchical-xs_article_'] a").each{|x| link = http://cnn.com"+x.attribute("href").value
+    #@article = Nokogiri::HTML(open("#{link}"))}
 
-    #content = doc = Nokogiri::HTML(open("http://www.cnn.com/2016/09/08/entertainment/kanye-west-yeezy-fashion-show/index.html"))
-    #doc.css("div.l-container .zn-body__paragraph").text
+    #content = @article.css("div.l-container .zn-body__paragraph").text
   end
 
-  def self.scrape_us_page
-    doc = Nokogiri::HTML(open("http://www.cnn.com/specials/last-50-stories"))
-    binding.pry
+  def self.scrape_energy_environment
+    doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/energy-and-environment"))
+
+    #title = doc.css("h3.cd__headline a span.cd__headline-text").each{|x| puts x.text}
+
+=begin
+    doc.css("h3.cd__headline a").each do |x|
+       link = "http://cnn.com"+x.attribute("href").value
+       @article = Nokogiri::HTML(open("#{link}"))
+    end
+=end
+
+    #content = @article.css("div.l-container .zn-body__paragraph").text
+
   end
 
-  def self.scrape_world_page
-    doc = Nokogiri::HTML(open("http://www.cnn.com/world"))
+  def self.scrape_world
+    doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/extreme-weather"))
 
   end
 
   def self.scrape_health_page
-    doc = Nokogiri::HTML(open("http://www.cnn.com/health"))
+    doc = Nokogiri::HTML(open("http://www.cnn.com/specials/space-science"))
 
   end
 
