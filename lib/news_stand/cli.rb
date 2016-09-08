@@ -1,6 +1,4 @@
 #CLI Controller
-require 'pry'
-
 class NewsStand::CLI
 
   def call
@@ -10,7 +8,11 @@ class NewsStand::CLI
   end
 
   def list_categories
-    @category = NewsStand::Category.categories
+    category = NewsStand::Category.all
+    puts "Welcome To Your Personal News Stand - Where Every Story From All The Top Sources Is Yours To Read... All In One Place!"
+    category.each.with_index(1) do |category, index|
+      puts "#{index}. #{category.name}"
+    end
   end
 
   def list_articles

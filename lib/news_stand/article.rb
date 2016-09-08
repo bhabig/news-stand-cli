@@ -1,6 +1,7 @@
 class NewsStand::Article
   attr_accessor :title, :content, :category, :url
 
+  @@all = []
 
   def self.articles(category)
     article_1 = self.new
@@ -25,14 +26,11 @@ class NewsStand::Article
 
     @@all = [article_1, article_2, article_3, article_4, article_5]
 
-    counter = 1
-    @@all.each do |article|
+    @@all.each.with_index(1) do |article, index|
       if article.category == category.downcase
-        puts "#{counter}. #{article.title}"
-        counter += 1
+        puts "#{index}. #{article.title}"
       end
     end
-    counter
   end
 
 
