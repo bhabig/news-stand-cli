@@ -64,7 +64,11 @@ class NewsStand::Scraper
   def self.scrape_categories
     doc = Nokogiri::HTML(open("http://www.cnn.com/us"))
 
-    x = doc.css("div#nav-section-submenu[data-analytics-header='main-menu_us'] a.nav-section__submenu-item").each {|x| puts x.text}
+    #category titles = doc.css("div#nav-section-submenu[data-analytics-header='main-menu_us'] a.nav-section__submenu-item").each {|x| puts x.text}
+    #category links = @links = []
+    #doc.css("div#nav-section-submenu[data-analytics-header='main-menu_us'] a.nav-section__submenu-item").each do |x|
+    # => @links << "http://www.cnn.com" + x.attribute("href").value
+    #end
     binding.pry
   end
 end
