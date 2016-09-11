@@ -61,7 +61,7 @@ class NewsStand::CLI
       @input = nil
       call
     elsif input.to_i > 0 && input.to_i <= 5
-      puts 'reading article'
+      puts @category.articles[input.to_i - 1].content
       list_articles
     elsif input == "exit"
       goodbye
