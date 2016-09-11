@@ -19,22 +19,21 @@ class NewsStand::Scraper
     link = doc.css("h3.cd__headline a")
 
     title.each do |t|
-      @article = NewsStand::Article.new
-      @article.title = t.text
+      article = NewsStand::Article.new
+      article.title = t.text
 
       NewsStand::Category.all.each do |c|
         if c.name.downcase.include?("crime")
-          c.add_article(@article) unless c.articles.size >= 5
+          c.add_article(article) unless c.articles.size >= 5
         end
       end
 
-      @article.url = "http://www.cnn.com" + link.attribute("href").value
-    end
+      article.url = "http://www.cnn.com" + link.attribute("href").value
 
-    NewsStand::Article.all.each do |a|
-      @story = Nokogiri::HTML(open("#{a.url}"))
-      a.content = @story.css("div.l-container .zn-body__paragraph").text
+      story = Nokogiri::HTML(open("#{article.url}"))
+      article.content = story.css("div.l-container .zn-body__paragraph").text
     end
+    NewsStand::Article.all
   end
 
   def self.scrape_energy_environment

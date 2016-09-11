@@ -21,13 +21,7 @@ class NewsStand::Category
     self.all.each.with_index(1) do |category, index|
       puts "#{index}. #{category.name}"
     end
-    puts "enter the number for the category from which you'd like to read articles or enter 'exit'"
-    print ":"
-    @input = gets.strip
-    if @input == "exit"
-      goodbye
-      exit
-    end
+
   end
 
   def category_articles

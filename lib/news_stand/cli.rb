@@ -2,18 +2,14 @@
 class NewsStand::CLI
 
   def call
-    scrape
     list_categories
     list_articles
+    read_article
     goodbye
   end
 
   def scrape
     NewsStand::Scraper.scrape_categories
-    NewsStand::Scraper.scrape_crime_justice
-    NewsStand::Scraper.scrape_energy_environment
-    NewsStand::Scraper.scrape_extreme_weather
-    NewsStand::Scraper.scrape_space_science
   end
 
   def list_categories
@@ -21,49 +17,55 @@ class NewsStand::CLI
   end
 
   def list_articles
-    puts "enter the number for the category from which you'd like to read articles or enter 'exit'"
-    print ":"
-    user_input
-    until @input == "exit"
-      case @input
-      when "1"
-        NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}.category_articles
-        puts "to choose another category, enter the number or enter 'back' to return to categories. or enter 'exit'"
-        print ":"
-        user_input
-      when "2"
-        NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}.category_articles
-        puts "to choose another category, enter the number or enter 'back' to return to categories. or enter 'exit'"
-        print ":"
-        user_input
-      when "3"
-        NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}.category_articles
-        puts "to choose another category, enter the number or enter 'back' to return to categories. or enter 'exit'"
-        print ":"
-        user_input
-      when "4"
-        NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}.category_articles
-        puts "to choose another category, enter the number or enter 'back' to return to categories. or enter 'exit'"
-        print ":"
-        user_input
-      when "back"
-        list_categories
+    if @input == nil
+      puts "enter the number for the category from which you'd like to read articles or enter 'exit'"
+      print ":"
+    end
+    @input ||= gets.strip
+    if @input == "1"
+      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
+        NewsStand::Scraper.scrape_crime_justice
+        @category.category_articles
+        read_article
+    elsif @input == "2"
+        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
+        NewsStand::Scraper.scrape_energy_environment
+        @category.category_articles
+        read_article
+      elsif @input == "3"
+        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
+        NewsStand::Scraper.scrape_extreme_weather
+        @category.category_articles
+        read_article
+      elsif @input == "4"
+        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
+        NewsStand::Scraper.scrape_space_science
+        @category.category_articles
+        read_article
+      elsif @input == "back"
+        call
+      elsif @input == "exit"
+        goodbye
+        exit
       else
         puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
         user_input
       end
-    end
   end
 
   def read_article
-    puts "enter the number for the article you'd like to read or enter 'exit'"
+    puts "enter the number for the article you want to read. to choose another category enter 'back' to return to the categories menu, or enter 'exit'"
     print ":"
-    user_input
-    until @input == "exit"
-      case @input
-      when "1"
-        puts "here"
-      end
+    input = gets.strip
+    if input == "back"
+      @input = nil
+      call
+    elsif input.to_i > 0 && input.to_i <= 5
+      puts 'reading article'
+      list_articles
+    elsif input == "exit"
+      goodbye
+      exit
     end
   end
 
@@ -71,11 +73,4 @@ class NewsStand::CLI
     puts "See You Tomorrow!"
   end
 
-  def user_input
-    @input = gets.strip
-    if @input == "exit"
-      goodbye
-      exit
-    end
-  end
 end
