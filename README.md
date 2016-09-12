@@ -1,8 +1,6 @@
 # NewsStand
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/news_stand`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to your brand new news stand! this is an interactive news app which brings the latest content of CNN's US section to your command line. You will be able to read any of the five newest articles from any subcategory of cnn.com/us.
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To use this app after installation, run './bin/news-stand' in your terminal. From there, follow the instructions to navigate the website. You will be required to enter either a number, the word 'back', or 'exit'. 'back' returns to a previous menu and 'exit' will terminate the session and return you to your command line.
 
 ## Development
 
@@ -32,5 +30,4 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/news_stand. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/bhabig/news_stand. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
