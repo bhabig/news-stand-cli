@@ -5,12 +5,11 @@ class NewsStand::Scraper
     attributes = doc.css("div#nav-section-submenu[data-analytics-header='main-menu_us'] a.nav-section__submenu-item")
 
     attributes.each do |a|
-      @category = NewsStand::Category.new
-      @category.name = a.text
-      @category.url = "http://www.cnn.com" + a.attribute("href").value
-      NewsStand::Category.all << @category
+      category = NewsStand::Category.new
+      category.name = a.text
+      category.url = "http://www.cnn.com" + a.attribute("href").value
+      NewsStand::Category.all << category
     end
-    NewsStand::Category.all
   end
 
   def self.scrape_crime_justice

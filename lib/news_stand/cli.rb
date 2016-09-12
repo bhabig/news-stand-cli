@@ -24,33 +24,33 @@ class NewsStand::CLI
     @input ||= gets.strip
     if @input == "1"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
-        NewsStand::Scraper.scrape_crime_justice
-        @category.category_articles
-        read_article
+      NewsStand::Scraper.scrape_crime_justice
+      @category.category_articles
+      read_article
     elsif @input == "2"
-        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
-        NewsStand::Scraper.scrape_energy_environment
-        @category.category_articles
-        read_article
-      elsif @input == "3"
-        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
-        NewsStand::Scraper.scrape_extreme_weather
-        @category.category_articles
-        read_article
-      elsif @input == "4"
-        @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
-        NewsStand::Scraper.scrape_space_science
-        @category.category_articles
-        read_article
-      elsif @input == "back"
-        call
-      elsif @input == "exit"
-        goodbye
-        exit
-      else
-        puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
-        user_input
-      end
+      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
+      NewsStand::Scraper.scrape_energy_environment
+      @category.category_articles
+      read_article
+    elsif @input == "3"
+      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
+      NewsStand::Scraper.scrape_extreme_weather
+      @category.category_articles
+      read_article
+    elsif @input == "4"
+      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
+      NewsStand::Scraper.scrape_space_science
+      @category.category_articles
+      read_article
+    elsif @input == "back"
+      call
+    elsif @input == "exit"
+      goodbye
+      exit
+    else
+      puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
+      user_input
+    end
   end
 
   def read_article
@@ -72,5 +72,4 @@ class NewsStand::CLI
   def goodbye
     puts "See You Tomorrow!"
   end
-
 end

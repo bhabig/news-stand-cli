@@ -22,7 +22,6 @@ class NewsStand::Category
     self.all.each.with_index(1) do |category, index|
       puts "#{index}. #{category.name}"
     end
-
   end
 
   def category_articles
