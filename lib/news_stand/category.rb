@@ -14,6 +14,7 @@ class NewsStand::Category
   def add_article(article)
     article.category = self
     self.articles << article
+    NewsStand::Article.all << article
   end
 
   def self.all_categories

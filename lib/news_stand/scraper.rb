@@ -17,94 +17,99 @@ class NewsStand::Scraper
     doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/crime-and-justice"))
     title = doc.css("h3.cd__headline a span.cd__headline-text")
     link = doc.css("h3.cd__headline a")
+    @crime_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
 
     title.each do |t|
-      article = NewsStand::Article.new
-      article.title = t.text
+      @article = NewsStand::Article.new
+      @article.title = t.text
 
-      NewsStand::Category.all.each do |c|
-        if c.name.downcase.include?("crime")
-          c.add_article(article) unless c.articles.size >= 5
-        end
+      if @crime_category.articles.size < 5
+        @crime_category.add_article(@article) unless @crime_category.articles.include?(@article)
       end
-
-      article.url = "http://www.cnn.com" + link.attribute("href").value
-
-      story = Nokogiri::HTML(open("#{article.url}"))
-      article.content = story.css("div.l-container .zn-body__paragraph").text
     end
-    NewsStand::Article.all
+      @counter = 0
+      @crime_category.articles.each do |a|
+
+        a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
+        page = Nokogiri::HTML(open("#{a.url}"))
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+        @counter += 1
+      end
+      @counter
   end
 
   def self.scrape_energy_environment
     doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/energy-and-environment"))
     title = doc.css("h3.cd__headline a span.cd__headline-text")
     link = doc.css("h3.cd__headline a")
+    @energy_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
 
     title.each do |t|
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      NewsStand::Category.all.each do |c|
-        if c.name.downcase.include?("energy")
-          c.add_article(@article) unless c.articles.size >= 5
-        end
+      if @energy_category.articles.size < 5
+        @energy_category.add_article(@article) unless @energy_category.articles.include?(@article)
       end
-
-      @article.url = "http://www.cnn.com" + link.attribute("href").value
     end
+      @counter = 0
+      @energy_category.articles.each do |a|
 
-    NewsStand::Article.all.each do |a|
-      @story = Nokogiri::HTML(open("#{a.url}"))
-      a.content = @story.css("div.l-container .zn-body__paragraph").text
-    end
+        a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
+        page = Nokogiri::HTML(open("#{a.url}"))
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+        @counter += 1
+      end
+      @counter
   end
 
   def self.scrape_extreme_weather
     doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/extreme-weather"))
     title = doc.css("h3.cd__headline a span.cd__headline-text")
     link = doc.css("h3.cd__headline a")
+    @weather_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("weather")}
 
     title.each do |t|
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      NewsStand::Category.all.each do |c|
-        if c.name.downcase.include?("extreme")
-          c.add_article(@article) unless c.articles.size >= 5
-        end
+      if @weather_category.articles.size < 5
+        @weather_category.add_article(@article) unless @weather_category.articles.include?(@article)
       end
-
-      @article.url = "http://www.cnn.com" + link.attribute("href").value
     end
+      @counter = 0
+      @weather_category.articles.each do |a|
 
-    NewsStand::Article.all.each do |a|
-      @story = Nokogiri::HTML(open("#{a.url}"))
-      a.content = @story.css("div.l-container .zn-body__paragraph").text
-    end
+        a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
+        page = Nokogiri::HTML(open("#{a.url}"))
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+        @counter += 1
+      end
+      @counter
   end
 
   def self.scrape_space_science
     doc = Nokogiri::HTML(open("http://www.cnn.com/specials/space-science"))
     title = doc.css("h3.cd__headline a span.cd__headline-text")
     link = doc.css("h3.cd__headline a")
+    @space_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
 
     title.each do |t|
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      NewsStand::Category.all.each do |c|
-        if c.name.downcase.include?("space")
-          c.add_article(@article) unless c.articles.size >= 5
-        end
+      if @space_category.articles.size < 5
+        @space_category.add_article(@article) unless @space_category.articles.include?(@article)
       end
-
-      @article.url = "http://www.cnn.com" + link.attribute("href").value
     end
+      @counter = 0
+      @space_category.articles.each do |a|
 
-    NewsStand::Article.all.each do |a|
-      @story = Nokogiri::HTML(open("#{a.url}"))
-      a.content = @story.css("div.l-container .zn-body__paragraph").text
+        a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
+        page = Nokogiri::HTML(open("#{a.url}"))
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+        @counter += 1
+      end
+      @counter
     end
-  end
 end
