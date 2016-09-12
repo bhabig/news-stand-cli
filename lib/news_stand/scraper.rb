@@ -22,7 +22,7 @@ class NewsStand::Scraper
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      if @crime_category.articles.size < 5
+      if @crime_category.articles.size < 10
         @crime_category.add_article(@article) unless @crime_category.articles.include?(@article)
       end
     end
@@ -31,7 +31,11 @@ class NewsStand::Scraper
     @crime_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      a.content = page.css("div.l-container .zn-body__paragraph").text
+      if page.css("div.l-container .zn-body__paragraph").text != ""
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+      else
+        @crime_category.articles.delete(a)
+      end
       @counter += 1
     end
     @counter
@@ -47,7 +51,7 @@ class NewsStand::Scraper
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      if @energy_category.articles.size < 5
+      if @energy_category.articles.size < 10
         @energy_category.add_article(@article) unless @energy_category.articles.include?(@article)
       end
     end
@@ -56,7 +60,11 @@ class NewsStand::Scraper
     @energy_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      a.content = page.css("div.l-container .zn-body__paragraph").text
+      if page.css("div.l-container .zn-body__paragraph").text != ""
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+      else
+        @energy_category.articles.delete(a)
+      end
       @counter += 1
     end
     @counter
@@ -72,7 +80,7 @@ class NewsStand::Scraper
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      if @weather_category.articles.size < 5
+      if @weather_category.articles.size < 10
         @weather_category.add_article(@article) unless @weather_category.articles.include?(@article)
       end
     end
@@ -81,7 +89,11 @@ class NewsStand::Scraper
     @weather_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      a.content = page.css("div.l-container .zn-body__paragraph").text
+      if page.css("div.l-container .zn-body__paragraph").text != ""
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+      else
+        @weather_category.articles.delete(a)
+      end
       @counter += 1
     end
     @counter
@@ -97,7 +109,7 @@ class NewsStand::Scraper
       @article = NewsStand::Article.new
       @article.title = t.text
 
-      if @space_category.articles.size < 5
+      if @space_category.articles.size < 10
         @space_category.add_article(@article) unless @space_category.articles.include?(@article)
       end
     end
@@ -106,7 +118,11 @@ class NewsStand::Scraper
     @space_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      a.content = page.css("div.l-container .zn-body__paragraph").text
+      if page.css("div.l-container .zn-body__paragraph").text != ""
+        a.content = page.css("div.l-container .zn-body__paragraph").text
+      else
+        @space_category.articles.delete(a)
+      end
       @counter += 1
     end
     @counter

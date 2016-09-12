@@ -6,8 +6,4 @@ class NewsStand::Article
   def self.all
     @@all
   end
-
-  def category_name
-    self.category ? self.category.name : nil
-  end
 end
