@@ -6,4 +6,5 @@ class NewsStand::Article
   def self.all
     @@all
   end
+
 end

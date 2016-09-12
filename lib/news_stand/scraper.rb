@@ -14,29 +14,24 @@ class NewsStand::Scraper
 
   def self.scrape_crime_justice
     doc = Nokogiri::HTML(open("http://www.cnn.com/specials/us/crime-and-justice"))
-    title = doc.css("h3.cd__headline a span.cd__headline-text")
-    link = doc.css("h3.cd__headline a")
+    @title = doc.css("h3.cd__headline a span.cd__headline-text")
+    @link = doc.css("h3.cd__headline a")
     @crime_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
 
-    title.each do |t|
-      @article = NewsStand::Article.new
-      @article.title = t.text
-
-      if @crime_category.articles.size < 10
-        @crime_category.add_article(@article) unless @crime_category.articles.include?(@article)
-      end
-    end
-
     @counter = 0
-    @crime_category.articles.each do |a|
-      a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
-      page = Nokogiri::HTML(open("#{a.url}"))
-      if page.css("div.l-container .zn-body__paragraph").text != ""
-        a.content = page.css("div.l-container .zn-body__paragraph").text
-      else
-        @crime_category.articles.delete(a)
+    @link.each do |l|
+      @url = ("http://www.cnn.com" + l.attribute("href").value)
+      @page = Nokogiri::HTML(open("#{@url}"))
+      @content = page.css("div.l-container .zn-body__paragraph").text
+
+      if @content != nil || @ontent != ""
+        @article = NewsStand::Article.new
+        @article.url = @url
+        @article.content = @content
+        @article.title = @title["#{@counter}"].text
+        @crime_category.add_article(@article) unless @crime_category.articles.size >= 10
+        @counter += 1
       end
-      @counter += 1
     end
     @counter
   end
@@ -60,14 +55,13 @@ class NewsStand::Scraper
     @energy_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      if page.css("div.l-container .zn-body__paragraph").text != ""
-        a.content = page.css("div.l-container .zn-body__paragraph").text
-      else
-        @energy_category.articles.delete(a)
-      end
+
+      a.content = page.css("div.l-container .zn-body__paragraph").text
+
       @counter += 1
     end
     @counter
+    @energy_category.articles.delete_if{|a| a.content == "" || a.content == nil}
   end
 
   def self.scrape_extreme_weather
@@ -89,14 +83,13 @@ class NewsStand::Scraper
     @weather_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      if page.css("div.l-container .zn-body__paragraph").text != ""
-        a.content = page.css("div.l-container .zn-body__paragraph").text
-      else
-        @weather_category.articles.delete(a)
-      end
+
+      a.content = page.css("div.l-container .zn-body__paragraph").text
+
       @counter += 1
     end
     @counter
+    @weather_category.articles.delete_if{|a| a.content == "" || a.content == nil}
   end
 
   def self.scrape_space_science
@@ -118,13 +111,12 @@ class NewsStand::Scraper
     @space_category.articles.each do |a|
       a.url = ("http://www.cnn.com" + link["#{@counter}".to_i].attribute("href").value)
       page = Nokogiri::HTML(open("#{a.url}"))
-      if page.css("div.l-container .zn-body__paragraph").text != ""
-        a.content = page.css("div.l-container .zn-body__paragraph").text
-      else
-        @space_category.articles.delete(a)
-      end
+
+      a.content = page.css("div.l-container .zn-body__paragraph").text
+
       @counter += 1
     end
     @counter
+    @space_category.articles.delete_if{|a| a.content == "" || a.content == nil}
   end
 end

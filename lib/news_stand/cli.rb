@@ -4,7 +4,6 @@ class NewsStand::CLI
   def call
     list_categories
     list_articles
-    read_article
     goodbye
   end
 
@@ -66,6 +65,9 @@ class NewsStand::CLI
     elsif input == "exit"
       goodbye
       exit
+    else
+      puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
+      user_input
     end
   end
 
