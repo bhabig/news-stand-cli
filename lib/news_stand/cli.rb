@@ -9,6 +9,10 @@ class NewsStand::CLI
 
   def scrape
     NewsStand::Scraper.scrape_categories
+    NewsStand::Scraper.scrape_crime_justice
+    NewsStand::Scraper.scrape_energy_environment
+    NewsStand::Scraper.scrape_extreme_weather
+    NewsStand::Scraper.scrape_space_science
   end
 
   def list_categories
@@ -23,22 +27,22 @@ class NewsStand::CLI
     @input ||= gets.strip
     if @input == "1"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
-      NewsStand::Scraper.scrape_crime_justice
+
       @category.category_articles
       read_article
     elsif @input == "2"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
-      NewsStand::Scraper.scrape_energy_environment
+
       @category.category_articles
       read_article
     elsif @input == "3"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
-      NewsStand::Scraper.scrape_extreme_weather
+
       @category.category_articles
       read_article
     elsif @input == "4"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
-      NewsStand::Scraper.scrape_space_science
+
       @category.category_articles
       read_article
     elsif @input == "back"
@@ -48,7 +52,8 @@ class NewsStand::CLI
       exit
     else
       puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
-      user_input
+      print ":"
+      @input = gets.strip
     end
   end
 
@@ -61,13 +66,15 @@ class NewsStand::CLI
       call
     elsif input.to_i > 0 && input.to_i <= 5
       puts @category.articles[input.to_i - 1].content
+      puts "---------------------------------------------------------------------------------------------------------------------------"
       list_articles
     elsif input == "exit"
       goodbye
       exit
     else
       puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
-      user_input
+      print ":"
+      input = gets.strip
     end
   end
 
