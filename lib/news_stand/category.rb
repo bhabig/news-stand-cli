@@ -19,9 +19,11 @@ class NewsStand::Category
 
   def self.all_categories
     puts "Welcome To Your Personal News Stand Where You Can Choose From Yahoo Articles By Category"
+    puts "----------------------------------------------------------------------------------------"
     self.all.each.with_index(1) do |category, index|
       puts "#{index}. #{category.name}"
     end
+    puts "----------------------------------------------------------------------------------------"
   end
 
   def category_articles

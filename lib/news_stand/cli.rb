@@ -27,23 +27,27 @@ class NewsStand::CLI
     @input ||= gets.strip
     if @input == "1"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
-
+      puts "----------------------------------------------------------------------------------------"
       @category.category_articles
+      puts "----------------------------------------------------------------------------------------"
       read_article
     elsif @input == "2"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
-
+      puts "----------------------------------------------------------------------------------------"
       @category.category_articles
+      puts "----------------------------------------------------------------------------------------"
       read_article
     elsif @input == "3"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
-
+      puts "----------------------------------------------------------------------------------------"
       @category.category_articles
+      puts "----------------------------------------------------------------------------------------"
       read_article
     elsif @input == "4"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
-
+      puts "----------------------------------------------------------------------------------------"
       @category.category_articles
+      puts "----------------------------------------------------------------------------------------"
       read_article
     elsif @input == "back"
       @input = nil
@@ -53,6 +57,7 @@ class NewsStand::CLI
       exit
     else
       puts "did not recognize your request."
+      puts "----------------------------------------------------------------------------------------"
       @input = nil
       list_articles
     end
@@ -64,10 +69,13 @@ class NewsStand::CLI
     input = gets.strip
     if input == "back"
       @input = nil
+      puts "----------------------------------------------------------------------------------------"
       call
     elsif input.to_i > 0 && input.to_i <= 5
-      puts @category.articles[input.to_i - 1].content
-      puts "---------------------------------------------------------------------------------------------------------------------------"
+      display = @category.articles[input.to_i - 1]
+      puts "----------------------------------------------------------------------------------------"
+      puts "#{display.title}:"
+      puts "#{display.content}"
       list_articles
     elsif input == "exit"
       goodbye
