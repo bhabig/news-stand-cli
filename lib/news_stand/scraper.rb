@@ -28,7 +28,7 @@ class NewsStand::Scraper
       @page = Nokogiri::HTML(open("#{@url}"))
       @content = @page.css("div.l-container .zn-body__paragraph").text
 
-      if @content != nil || @ontent != ""
+      if @content != nil || @content != ""
         @article = NewsStand::Article.new
         @article.url = @url
         @article.content = @content
@@ -56,14 +56,14 @@ class NewsStand::Scraper
       @page = Nokogiri::HTML(open("#{@url}"))
       @content = @page.css("div.l-container .zn-body__paragraph").text
 
-      if @content != nil || @ontent != ""
+      unless @content == nil || @content == ""
         @article = NewsStand::Article.new
         @article.url = @url
         @article.content = @content
         @article.title = @title["#{@counter}".to_i].text
         @energy_category.add_article(@article) unless @energy_category.articles.size >= 10
-        @counter += 1
       end
+      @counter += 1
     end
     @counter
   end
@@ -84,7 +84,7 @@ class NewsStand::Scraper
       @page = Nokogiri::HTML(open("#{@url}"))
       @content = @page.css("div.l-container .zn-body__paragraph").text
 
-      if @content != nil || @ontent != ""
+      if @content != nil || @content != ""
         @article = NewsStand::Article.new
         @article.url = @url
         @article.content = @content
@@ -112,7 +112,7 @@ class NewsStand::Scraper
       @page = Nokogiri::HTML(open("#{@url}"))
       @content = @page.css("div.l-container .zn-body__paragraph").text
 
-      if @content != nil || @ontent != ""
+      if @content != nil || @content != ""
         @article = NewsStand::Article.new
         @article.url = @url
         @article.content = @content

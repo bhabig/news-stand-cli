@@ -20,7 +20,7 @@ class NewsStand::CLI
   end
 
   def list_articles
-    if @input == nil
+    unless @input != nil
       puts "enter the number for the category from which you'd like to read articles or enter 'exit'"
       print ":"
     end
@@ -46,14 +46,15 @@ class NewsStand::CLI
       @category.category_articles
       read_article
     elsif @input == "back"
+      @input = nil
       call
     elsif @input == "exit"
       goodbye
       exit
     else
-      puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
-      print ":"
-      @input = gets.strip
+      puts "did not recognize your request."
+      @input = nil
+      list_articles
     end
   end
 
@@ -72,9 +73,8 @@ class NewsStand::CLI
       goodbye
       exit
     else
-      puts "did not recognize your request. please select a category, enter 'back' to see categories again, or enter 'exit'"
-      print ":"
-      input = gets.strip
+      puts "did not recognize your request."
+      read_article
     end
   end
 
