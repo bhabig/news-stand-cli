@@ -2,8 +2,6 @@
 
 #require './lib/news_stand'
 require "bundler/setup"
-require "news_stand"
+require_relative "../lib/news_stand"
 
-news = NewsStand::CLI.new
-news.scrape
-news.call
+NewsStand::CLI.new.start

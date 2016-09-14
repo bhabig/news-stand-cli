@@ -1,7 +1,8 @@
 #CLI Controller
 class NewsStand::CLI
 
-  def call
+  def start
+    @categories ||= scrape
     list_categories
     list_articles
     goodbye
@@ -13,10 +14,16 @@ class NewsStand::CLI
     NewsStand::Scraper.scrape_energy_environment
     NewsStand::Scraper.scrape_extreme_weather
     NewsStand::Scraper.scrape_space_science
+    NewsStand::Category.all
   end
 
   def list_categories
-    NewsStand::Category.all_categories
+    puts "Welcome To Your Personal News Stand Where You Can Choose From Yahoo Articles By Category"
+    puts "----------------------------------------------------------------------------------------"
+    @categories.each.with_index(1) do |category, index|
+      puts "#{index}. #{category.name}"
+    end
+    puts "----------------------------------------------------------------------------------------"
   end
 
   def list_articles
@@ -51,7 +58,7 @@ class NewsStand::CLI
       read_article
     elsif @input == "back"
       @input = nil
-      call
+      start
     elsif @input == "exit"
       goodbye
       exit
@@ -70,7 +77,7 @@ class NewsStand::CLI
     if input == "back"
       @input = nil
       puts "----------------------------------------------------------------------------------------"
-      call
+      start
     elsif input.to_i > 0 && input.to_i <= 5
       display = @category.articles[input.to_i - 1]
       puts "----------------------------------------------------------------------------------------"

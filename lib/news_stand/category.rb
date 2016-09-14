@@ -17,15 +17,6 @@ class NewsStand::Category
     NewsStand::Article.all << article
   end
 
-  def self.all_categories
-    puts "Welcome To Your Personal News Stand Where You Can Choose From Yahoo Articles By Category"
-    puts "----------------------------------------------------------------------------------------"
-    self.all.each.with_index(1) do |category, index|
-      puts "#{index}. #{category.name}"
-    end
-    puts "----------------------------------------------------------------------------------------"
-  end
-
   def category_articles
     self.articles[0..4].each.with_index(1) do |article, index|
       puts "#{index}. #{article.title}"
