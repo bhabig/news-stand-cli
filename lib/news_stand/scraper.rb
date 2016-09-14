@@ -20,7 +20,7 @@ class NewsStand::Scraper
     @counter = 0
     link[0..29].each do |l|
       self.scrape_article_url(l)
-      self.maker(title, us_category)
+      self.create_and_add_article(title, us_category)
     end
   end
 
@@ -33,7 +33,7 @@ class NewsStand::Scraper
     @counter = 0
     link[0..29].each do |l|
       self.scrape_article_url(l)
-      self.maker(title, us_category)
+      self.create_and_add_article(title, us_category)
     end
   end
 
@@ -46,7 +46,7 @@ class NewsStand::Scraper
     @counter = 0
     link[0..29].each do |l|
       self.scrape_article_url(l)
-      self.maker(title, us_category)
+      self.create_and_add_article(title, us_category)
     end
   end
 
@@ -58,7 +58,7 @@ class NewsStand::Scraper
     @counter = 0
     link[0..29].each do |l|
       self.scrape_article_url(l)
-      self.maker(title, us_category)
+      self.create_and_add_article(title, us_category)
     end
   end
 
@@ -80,7 +80,7 @@ class NewsStand::Scraper
     @content = page.css("div.l-container .zn-body__paragraph").text
   end
 
-  def self.maker(title, us_category)
+  def self.create_and_add_article(title, us_category)
     if @content != nil || @content != ""
       article = self.make_article(title, @url, @content)
       us_category.add_article(article) unless us_category.articles.size >= 10
