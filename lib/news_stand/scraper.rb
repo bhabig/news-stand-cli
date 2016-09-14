@@ -1,7 +1,4 @@
 class NewsStand::Scraper
-
-  attr_accessor :url, :content, :title
-
   def self.scrape_categories
     doc = Nokogiri::HTML(open("http://www.cnn.com/us"))
     attributes = doc.css("div#nav-section-submenu[data-analytics-header='main-menu_us'] a.nav-section__submenu-item")
@@ -11,32 +8,6 @@ class NewsStand::Scraper
       category.name = a.text
       category.url = "http://www.cnn.com" + a.attribute("href").value
       NewsStand::Category.all << category
-    end
-  end
-
-  def self.make_article(title, url, content)
-    NewsStand::Article.new({
-      url: url,
-      content: content,
-      title: title[@counter].text
-    })
-  end
-
-  def self.scrape_article_url(l)
-    if l.attribute("href").value.include?("http://")
-      @url = l.attribute("href").value
-    else
-      @url = ("http://www.cnn.com" + l.attribute("href").value)
-    end
-    page = Nokogiri::HTML(open("#{@url}"))
-    @content = page.css("div.l-container .zn-body__paragraph").text
-  end
-
-  def self.maker(title, us_category)
-    if @content != nil || @content != ""
-      article = self.make_article(title, @url, @content)
-      us_category.add_article(article) unless us_category.articles.size >= 10
-      @counter += 1
     end
   end
 
@@ -88,6 +59,32 @@ class NewsStand::Scraper
     link[0..29].each do |l|
       self.scrape_article_url(l)
       self.maker(title, us_category)
+    end
+  end
+
+  def self.make_article(title, url, content)
+    NewsStand::Article.new({
+      url: url,
+      content: content,
+      title: title[@counter].text
+    })
+  end
+
+  def self.scrape_article_url(l)
+    if l.attribute("href").value.include?("http://")
+      @url = l.attribute("href").value
+    else
+      @url = ("http://www.cnn.com" + l.attribute("href").value)
+    end
+    page = Nokogiri::HTML(open("#{@url}"))
+    @content = page.css("div.l-container .zn-body__paragraph").text
+  end
+
+  def self.maker(title, us_category)
+    if @content != nil || @content != ""
+      article = self.make_article(title, @url, @content)
+      us_category.add_article(article) unless us_category.articles.size >= 10
+      @counter += 1
     end
   end
 end

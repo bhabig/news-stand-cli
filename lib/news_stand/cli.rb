@@ -34,28 +34,16 @@ class NewsStand::CLI
     @input ||= gets.strip
     if @input == "1"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
-      puts "----------------------------------------------------------------------------------------"
-      @category.category_articles
-      puts "----------------------------------------------------------------------------------------"
-      read_article
+      display_titles
     elsif @input == "2"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
-      puts "----------------------------------------------------------------------------------------"
-      @category.category_articles
-      puts "----------------------------------------------------------------------------------------"
-      read_article
+      display_titles
     elsif @input == "3"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
-      puts "----------------------------------------------------------------------------------------"
-      @category.category_articles
-      puts "----------------------------------------------------------------------------------------"
-      read_article
+      display_titles
     elsif @input == "4"
       @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
-      puts "----------------------------------------------------------------------------------------"
-      @category.category_articles
-      puts "----------------------------------------------------------------------------------------"
-      read_article
+      display_titles
     elsif @input == "back"
       @input = nil
       start
@@ -95,5 +83,12 @@ class NewsStand::CLI
 
   def goodbye
     puts "See You Tomorrow!"
+  end
+
+  def display_titles
+    puts "----------------------------------------------------------------------------------------"
+    @category.category_articles
+    puts "----------------------------------------------------------------------------------------"
+    read_article
   end
 end
