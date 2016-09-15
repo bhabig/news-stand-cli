@@ -18,7 +18,7 @@ class NewsStand::Scraper
     us_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
 
     @counter = 0
-    link[0..29].each do |l|
+    link[0..10].each do |l|
       self.scrape_article_url(l)
       self.create_and_add_article(title, us_category)
     end
@@ -31,7 +31,7 @@ class NewsStand::Scraper
     us_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
 
     @counter = 0
-    link[0..29].each do |l|
+    link[0..10].each do |l|
       self.scrape_article_url(l)
       self.create_and_add_article(title, us_category)
     end
@@ -44,7 +44,7 @@ class NewsStand::Scraper
     us_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("weather")}
 
     @counter = 0
-    link[0..29].each do |l|
+    link[0..10].each do |l|
       self.scrape_article_url(l)
       self.create_and_add_article(title, us_category)
     end
@@ -56,7 +56,7 @@ class NewsStand::Scraper
     link = doc.css("div.cd__content h3 a")
     us_category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
     @counter = 0
-    link[0..29].each do |l|
+    link[0..10].each do |l|
       self.scrape_article_url(l)
       self.create_and_add_article(title, us_category)
     end

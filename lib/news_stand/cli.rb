@@ -32,17 +32,8 @@ class NewsStand::CLI
       print ":"
     end
     @input ||= gets.strip
-    if @input == "1"
-      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("crime")}
-      display_titles
-    elsif @input == "2"
-      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("energy")}
-      display_titles
-    elsif @input == "3"
-      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("extreme")}
-      display_titles
-    elsif @input == "4"
-      @category = NewsStand::Category.all.find {|c| c.name.downcase.include?("space")}
+    if @input.to_i > 0 && @input.to_i <= 4
+      @category = NewsStand::Category.all[@input.to_i - 1]
       display_titles
     elsif @input == "back"
       @input = nil
@@ -91,4 +82,7 @@ class NewsStand::CLI
     puts "----------------------------------------------------------------------------------------"
     read_article
   end
+
+
+
 end
